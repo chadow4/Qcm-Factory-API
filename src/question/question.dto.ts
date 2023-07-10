@@ -5,7 +5,7 @@ import { QuestionnaireDto } from "../questionnaire/questionnaire.dto";
 export interface QuestionCreateDto {
   questionText: string;
   correctOption: string;
-  options : String[];
+  options : string[];
   questionnaireId: number;
 }
 

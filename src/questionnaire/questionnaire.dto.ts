@@ -2,7 +2,7 @@ import { UserDto } from "../user/user.dto";
 import { IsNotEmpty } from "class-validator";
 import { QuestionDto } from "../question/question.dto";
 
-export interface QuestionaireCreateDto {
+export interface QuestionnaireCreateDto {
   name: string;
   time: number;
   authorId: number;
