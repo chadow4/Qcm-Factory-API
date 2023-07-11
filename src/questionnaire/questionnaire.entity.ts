@@ -13,6 +13,9 @@ export class QuestionnaireEntity {
   @Column()
   time: number;
 
+  @Column()
+  isOpen: boolean;
+
   @OneToMany(() => QuestionEntity, question => question.questionnaire)
   questions: QuestionEntity[];
 

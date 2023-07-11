@@ -5,7 +5,6 @@ import { QuestionDto } from "../question/question.dto";
 export interface QuestionnaireCreateDto {
   name: string;
   time: number;
-  authorId: number;
 }
 
 export interface QuestionnaireDeleteDto {
@@ -23,3 +22,4 @@ export class QuestionnaireDto{
   author: UserDto;
   questions: QuestionDto[];
 }
+

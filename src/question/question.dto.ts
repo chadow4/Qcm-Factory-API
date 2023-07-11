@@ -24,3 +24,14 @@ export class QuestionDto{
   options: OptionDto[];
   questionnaire : QuestionnaireDto;
 }
+
+export class QuestionWithoutResponseDto{
+  @IsNotEmpty()
+  id: number;
+  @IsNotEmpty()
+  questionText: string;
+  @IsNotEmpty()
+  options: OptionDto[];
+  questionnaire : QuestionnaireDto;
+
+}

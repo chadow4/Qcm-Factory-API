@@ -13,13 +13,12 @@ export class UserController {
   }
 
   @Get()
-  @UseGuards(AuthGuard("jwt"),RolesGuard)
+  @UseGuards(AuthGuard("jwt"))
   async showAllUsers() {
     try {
       return await this.userService.showAllUsers();
     } catch (error) {
       return {
-        statusCode: error.getStatus(),
         message: error.message
       };
     }
@@ -32,7 +31,6 @@ export class UserController {
       return await this.userService.findOneById(req.user.id);
     } catch (error) {
       return {
-        statusCode: error.getStatus(),
         message: error.message
       };
     }
@@ -46,7 +44,6 @@ export class UserController {
       return await this.userService.findOneById(id);
     } catch (error) {
       return {
-        statusCode: error.getStatus(),
         message: error.message
       };
     }
@@ -57,27 +54,29 @@ export class UserController {
   @UseGuards(AuthGuard("jwt"))
   async updateUser(@Request() req, @Body() userUpdateDto: UserUpdateDto) {
     try {
-      return await this.userService.updateUser(req.user.id, userUpdateDto);
+      await this.userService.updateUser(req.user.id, userUpdateDto);
+        return {
+            message: "User updated",
+        }
     } catch (error) {
       return {
-        statusCode: error.getStatus(),
         message: error.message
       };
     }
   }
 
   @Delete(":id")
-  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @UseGuards(AuthGuard("jwt"))
   async deleteUser(@Param("id") id: number) {
     try {
-      return await this.userService.deleteUser(id);
-    } catch (error) {
-      if (error instanceof HttpException) {
+      await this.userService.deleteUser(id);
         return {
-          statusCode: error.getStatus(),
+            message: "User deleted",
+        }
+    } catch (error) {
+        return {
           message: error.message
         };
-      }
     }
 
   }

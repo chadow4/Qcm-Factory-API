@@ -14,21 +14,12 @@ export class AuthService {
   ) {
   }
 
-  async register(userDto: UserCreateDto): Promise<RegistrationStatus> {
-    let status: RegistrationStatus = {
-      success: true,
-      message: "user registered"
-    };
+  async register(userDto: UserCreateDto) {
     try {
       await this.usersService.createUser(userDto);
     } catch (err) {
-      status = {
-        success: false,
-        message: err.message
-      };
+        throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
     }
-
-    return status;
   }
 
   async login(loginUserDto: UserLoginDto): Promise<LoginStatus> {

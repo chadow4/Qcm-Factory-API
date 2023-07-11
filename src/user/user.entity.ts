@@ -11,20 +11,19 @@ export class UserEntity {
   @Column({
     type: "varchar",
     nullable: false,
-    unique: true
   })
   firstname: string;
 
   @Column({
     type: "varchar",
     nullable: false,
-    unique: true
   })
   lastname: string;
 
   @Column({
     type: "varchar",
-    nullable: false
+    nullable: false,
+    unique: true
   })
   email: string;
 

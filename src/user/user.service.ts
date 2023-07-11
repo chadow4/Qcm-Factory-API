@@ -71,7 +71,7 @@ export class UserService {
     }
   }
 
-  async updateUser(sessionId: number, userUpdateDto: UserUpdateDto): Promise<UserDto> {
+  async updateUser(sessionId: number, userUpdateDto: UserUpdateDto){
     const user = await this.usersRepository.findOne({ where: { id: sessionId } });
     if (!user) {
       throw new HttpException("User not Found", HttpStatus.NOT_FOUND);
@@ -82,19 +82,17 @@ export class UserService {
 
     try {
       await this.usersRepository.save(user);
-      return toUserDto(user);
     } catch (error) {
       throw new HttpException("Error Updating User", HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  async deleteUser(idUser: number): Promise<boolean> {
+  async deleteUser(idUser: number) {
     const user = await this.usersRepository.findOne({ where: { id: idUser } });
     if (!user) {
       throw new HttpException("User not Found", HttpStatus.NOT_FOUND);
     }
     await this.usersRepository.remove(user);
-    return true;
   }
 
 }
