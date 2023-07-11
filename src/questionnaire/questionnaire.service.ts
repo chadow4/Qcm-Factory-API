@@ -21,7 +21,7 @@ export class QuestionnaireService {
 
 
     async getAllQuestionnaires(): Promise<QuestionnaireDto[]> {
-        const questionnaires = await this.questionnaireRepository.find({relations: ["author"]});
+        const questionnaires = await this.questionnaireRepository.find();
         return questionnaires.map(questionnaire => toQuestionnaireDto(questionnaire));
     }
 
