@@ -7,7 +7,6 @@ export interface UserCreateDto {
   lastname: string;
   email: string;
   password: string;
-  role: Role;
 }
 
 export interface UserUpdateDto {
@@ -15,7 +14,6 @@ export interface UserUpdateDto {
   lastname?: string;
   email?: string;
   password?: string;
-  role?: Role;
 }
 
 export interface UserDeleteDto {

@@ -1,6 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
 import { QuestionnaireEntity } from "../questionnaire/questionnaire.entity";
-import { OptionEntity } from "../option/option.entity";
 
 @Entity()
 export class QuestionEntity {
@@ -13,9 +12,9 @@ export class QuestionEntity {
   @Column()
   correctOption: string;
 
+  @Column({ type: 'json' }) // Utilisez le type de données JSON
+  options: string[];
+
   @ManyToOne(() => QuestionnaireEntity, questionnaire => questionnaire.questions)
   questionnaire: QuestionnaireEntity;
-
-  @OneToMany(() => OptionEntity, option => option.question, { cascade: true })
-  options: OptionEntity[];
 }

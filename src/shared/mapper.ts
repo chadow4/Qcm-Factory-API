@@ -19,22 +19,24 @@ export const toUserDto = (data: UserEntity): UserDto => {
 };
 
 export const toQuestionnaireDto = (data: QuestionnaireEntity): QuestionnaireDto => {
-    const {id, name, time, author, questions} = data;
+    const {id, name, time,isOpen, author, questions} = data;
     return <QuestionnaireDto>{
         id,
         name,
         time,
+        isOpen,
         author: author && toUserDto(author),
         questions: questions && questions.map(question => toQuestionDto(question))
     };
 };
 
 export const toQuestionnaireWithoutResponses = (data: QuestionnaireEntity): QuestionnaireDto => {
-    const {id, name, time, author, questions} = data;
+    const {id, name, time,isOpen, author, questions} = data;
     return <QuestionnaireDto>{
         id,
         name,
         time,
+        isOpen,
         author: author && toUserDto(author),
         questions: questions && questions.map(question => toQuestionWithoutResponsesDto(question))
     };

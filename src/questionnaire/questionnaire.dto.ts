@@ -19,6 +19,8 @@ export class QuestionnaireDto{
   @IsNotEmpty()
   time: number;
   @IsNotEmpty()
+  isOpen: boolean;
+  @IsNotEmpty()
   author: UserDto;
   questions: QuestionDto[];
 }

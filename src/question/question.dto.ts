@@ -1,5 +1,4 @@
 import { IsNotEmpty } from "class-validator";
-import { OptionDto } from "../option/option.dto";
 import { QuestionnaireDto } from "../questionnaire/questionnaire.dto";
 
 export interface QuestionCreateDto {
@@ -21,7 +20,7 @@ export class QuestionDto{
   @IsNotEmpty()
   correctOption: string;
   @IsNotEmpty()
-  options: OptionDto[];
+  options: string[];
   questionnaire : QuestionnaireDto;
 }
 
@@ -31,7 +30,7 @@ export class QuestionWithoutResponseDto{
   @IsNotEmpty()
   questionText: string;
   @IsNotEmpty()
-  options: OptionDto[];
+  options: string[];
   questionnaire : QuestionnaireDto;
 
 }
