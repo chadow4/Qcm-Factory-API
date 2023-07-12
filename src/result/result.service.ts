@@ -34,6 +34,7 @@ export class ResultService {
                 where: {questionnaire: {id: idQuestionnaire}, student: {id: idStudent}},
                 relations: ["questionnaire", "questionnaire.questions"]
             });
+        if(!result) throw new HttpException("Result not found", HttpStatus.NOT_FOUND);
         return toResultDto(result);
 
     }
