@@ -17,6 +17,9 @@ export class QuestionnaireEntity {
     @Column()
     isOpen: boolean;
 
+    @Column()
+    isFinished: boolean;
+
     @OneToMany(() => QuestionEntity, question => question.questionnaire, {cascade: true})
     questions: QuestionEntity[];
 

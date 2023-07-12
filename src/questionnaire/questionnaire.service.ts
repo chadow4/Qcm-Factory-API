@@ -48,7 +48,8 @@ export class QuestionnaireService {
             name: questionnaireCreateDto.name,
             time: questionnaireCreateDto.time,
             author: author,
-            isOpen: false
+            isOpen: false,
+            isFinished: false
         });
         try {
             await this.questionnaireRepository.save(newQuestionnaire);
@@ -94,6 +95,9 @@ export class QuestionnaireService {
         if (!questionnaire) throw new HttpException("Questionnaire not found", HttpStatus.NOT_FOUND);
         if (questionnaire.author.id != sessionId) {
             throw new HttpException("You are not authorized to finish this questionnaire", HttpStatus.UNAUTHORIZED);
+        }
+        if(questionnaire.isOpen && !questionnaire.isFinished){
+            questionnaire.isFinished = true;
         }
         questionnaire.isOpen = !questionnaire.isOpen;
         try {

@@ -29,7 +29,7 @@ export class ResultController {
     @Get(':idQuestionnaire')
     @UseGuards(AuthGuard("jwt"))
     @ApiResponse({status: 200, description: 'Result for Student', type: ResultPartialDto})
-    async showResultForQuestionnnaire(@Param('idQuestionnaire') idQuestionnaire: number, @Request() req) {
+    async showResultForQuestionnaire(@Param('idQuestionnaire') idQuestionnaire: number, @Request() req) {
         {
             try {
                 return await this.resultService.getResultForQuestionnaire(idQuestionnaire, req.user.id);
