@@ -11,9 +11,8 @@ import { ApiResponse, ApiTags } from "@nestjs/swagger";
 @ApiTags('Questionnaire')
 @Controller("questionnaire")
 export class QuestionnaireController {
-    constructor(private readonly questionnaireService: QuestionnaireService) {}
-
     @Get()
+    @UseGuards(AuthGuard("jwt"))
     @ApiResponse({ status: 200, description: 'List of all questionnaires' , type: QuestionnairePartialDto, isArray: true})
     async showAllQuestionnaires() {
         try {
@@ -23,7 +22,10 @@ export class QuestionnaireController {
         }
     }
 
+    constructor(private readonly questionnaireService: QuestionnaireService) {}
+
     @Get(":id")
+    @UseGuards(AuthGuard("jwt"))
     @ApiResponse({ status: 200, description: 'Information of the questionnaire with the specified ID', type: QuestionnaireDto })
     async getQuestionnaireById(@Param("id") id: number) {
         try {
