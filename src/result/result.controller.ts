@@ -41,6 +41,7 @@ export class ResultController {
 
     @Post()
     @UseGuards(AuthGuard("jwt"))
+    @ApiResponse({status: 200, description: 'Result created', type: ResultPartialDto})
     async createResult(@Request() req, @Body() resultCreateDto: ResultCreateDto) {
         try {
             await this.resultService.createResult(resultCreateDto, req.user.id);
