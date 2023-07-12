@@ -30,7 +30,7 @@ export class QuestionnaireService {
             {where: {id}, relations: ["author", "questions"]});
         if (!questionnaire) throw new HttpException("Questionnaire not found", HttpStatus.NOT_FOUND);
 
-        if (questionnaire.isOpen) {
+        if (questionnaire.isFinished) {
             return toQuestionnaireDto(questionnaire);
         }
 

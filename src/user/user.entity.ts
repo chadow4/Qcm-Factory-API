@@ -48,7 +48,7 @@ export class UserEntity {
   @OneToMany(() => QuestionnaireEntity, questionnaire => questionnaire.author, { cascade: true })
   questionnaires: QuestionnaireEntity[];
 
-  @OneToMany(() => ResultEntity, result => result.questionnaire)
+  @OneToMany(() => ResultEntity, result => result.student,{ cascade: true })
   results: ResultEntity[];
 
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })

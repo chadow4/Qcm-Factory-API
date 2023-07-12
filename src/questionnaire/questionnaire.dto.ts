@@ -65,5 +65,9 @@ export class QuestionnairePartialDto {
     @IsNotEmpty()
     isOpen: boolean;
 
+    @ApiProperty({description: 'Flag indicating if the questionnaire is finished'})
+    @IsNotEmpty()
+    isFinished: boolean;
+
 }
 

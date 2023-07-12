@@ -40,7 +40,9 @@ export class ResultService {
     }
 
     async createResult(resultCreateDto: ResultCreateDto, sessionId) {
+        if(!resultCreateDto.questionnaireId || !resultCreateDto.responses) throw new HttpException("Missing fields", HttpStatus.BAD_REQUEST);
         const student = await this.userRepository.findOne({where: {id: sessionId}});
+        console.log(student);
         const questionnaire = await this.questionnaireRepository.findOne(
             {
                 where: {id: resultCreateDto.questionnaireId},

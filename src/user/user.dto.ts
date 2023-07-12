@@ -2,7 +2,7 @@ import {IsEmail, IsNotEmpty} from 'class-validator';
 import {ApiProperty} from '@nestjs/swagger';
 import {Role} from '../auth/interface/role.enum';
 import {QuestionnaireDto, QuestionnairePartialDto} from '../questionnaire/questionnaire.dto';
-import {ResultDto, ResultPartialDto} from "../result/result.dto";
+import {ResultDto, ResultPartialDto, ResultPartialForUserDto} from "../result/result.dto";
 
 export class UserCreateDto {
     @ApiProperty({description: 'First name of the user'})
@@ -80,7 +80,7 @@ export class UserDto {
     @ApiProperty({type: () => [QuestionnairePartialDto], description: 'List of questionnaires created by the user'})
     questionnaires: QuestionnaireDto[];
 
-    @ApiProperty({type: () => [ResultPartialDto], description: 'List of results of the user'})
+    @ApiProperty({type: () => [ResultPartialForUserDto], description: 'List of results of the user'})
     results: ResultDto[];
 }
 
