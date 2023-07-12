@@ -1,7 +1,7 @@
-import {Controller, Get, Param, Request, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, Param, Post, Request, UseGuards} from '@nestjs/common';
 import {ApiResponse, ApiTags} from "@nestjs/swagger";
 import {ResultService} from "./result.service";
-import {ResultDto, ResultPartialDto, ResultPartialGlobalDto} from "./result.dto";
+import {ResultCreateDto, ResultDto, ResultPartialDto, ResultPartialGlobalDto} from "./result.dto";
 import {HasRoles} from "../auth/has-roles.decorator";
 import {Role} from "../auth/interface/role.enum";
 import {AuthGuard} from "@nestjs/passport";
@@ -27,7 +27,7 @@ export class ResultController {
     }
 
     @Get(':idQuestionnaire')
-    @UseGuards(AuthGuard("jwt"), RolesGuard)
+    @UseGuards(AuthGuard("jwt"))
     @ApiResponse({status: 200, description: 'Result for Student', type: ResultPartialDto})
     async showResultForQuestionnnaire(@Param('idQuestionnaire') idQuestionnaire: number, @Request() req) {
         {
@@ -36,6 +36,17 @@ export class ResultController {
             } catch (error) {
                 return {message: error.message};
             }
+        }
+    }
+
+    @Post()
+    @UseGuards(AuthGuard("jwt"))
+    async createResult(@Request() req, @Body() resultCreateDto: ResultCreateDto) {
+        try {
+            await this.resultService.createResult(resultCreateDto, req.user.id);
+            return {message: "Result created"};
+        } catch (error) {
+            return {message: error.message};
         }
     }
 
