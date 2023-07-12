@@ -2,6 +2,7 @@ import { BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 
 import * as bcrypt from "bcrypt";
 import { Role } from "../auth/interface/role.enum";
 import { QuestionnaireEntity } from "../questionnaire/questionnaire.entity";
+import {ResultEntity} from "../result/result.entity";
 
 @Entity()
 export class UserEntity {
@@ -46,6 +47,9 @@ export class UserEntity {
 
   @OneToMany(() => QuestionnaireEntity, questionnaire => questionnaire.author, { cascade: true })
   questionnaires: QuestionnaireEntity[];
+
+  @OneToMany(() => ResultEntity, result => result.questionnaire)
+  results: ResultEntity[];
 
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   createdAt: Date;

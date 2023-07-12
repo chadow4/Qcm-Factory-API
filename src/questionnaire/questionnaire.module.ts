@@ -8,7 +8,7 @@ import { QuestionEntity } from "../question/question.entity";
 import { AuthModule } from "../auth/auth.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([QuestionnaireEntity, QuestionEntity,UserEntity]),AuthModule],
+  imports: [TypeOrmModule.forFeature([QuestionnaireEntity, QuestionEntity,UserEntity])],
   controllers: [QuestionnaireController],
   providers: [QuestionnaireService]
 })

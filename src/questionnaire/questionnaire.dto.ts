@@ -62,3 +62,4 @@ export class QuestionnairePartialDto{
   isOpen: boolean;
 
 }
+

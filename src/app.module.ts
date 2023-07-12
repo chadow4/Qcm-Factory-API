@@ -10,6 +10,8 @@ import { QuestionnaireModule } from './questionnaire/questionnaire.module';
 import { QuestionModule } from './question/question.module';
 import { QuestionnaireEntity } from "./questionnaire/questionnaire.entity";
 import { QuestionEntity } from "./question/question.entity";
+import { ResultModule } from './result/result.module';
+import {ResultEntity} from "./result/result.entity";
 
 @Module({
   imports: [ConfigModule.forRoot(), TypeOrmModule.forRoot({
@@ -19,9 +21,9 @@ import { QuestionEntity } from "./question/question.entity";
     username: "root",
     password: "root",
     database: "qcmfactory",
-    entities: [UserEntity,QuestionnaireEntity,QuestionEntity], // adding entities
+    entities: [UserEntity,QuestionnaireEntity,QuestionEntity,ResultEntity], // adding entities
     synchronize: true
-  }),UserModule,AuthModule, QuestionnaireModule, QuestionModule
+  }),UserModule,AuthModule, QuestionnaireModule, QuestionModule, ResultModule
   ],
   controllers: [AppController],
   providers: [AppService],
