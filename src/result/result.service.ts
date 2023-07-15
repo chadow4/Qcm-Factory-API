@@ -20,6 +20,12 @@ export class ResultService {
     }
 
     async getAllResultsForQuestionnaire(idQuestionnaire: number): Promise<ResultDto[]> {
+        const questionnaire = await this.questionnaireRepository.findOne(
+            {
+                where: {id: idQuestionnaire},
+            }
+        );
+        if (!questionnaire.isFinished) throw new HttpException("Questionnaire not finished", HttpStatus.BAD_REQUEST);
         const results = await this.resultRepository.find(
             {
                 where: {questionnaire: {id: idQuestionnaire}},
@@ -29,18 +35,24 @@ export class ResultService {
     }
 
     async getResultForQuestionnaire(idQuestionnaire: number, idStudent: number): Promise<ResultDto> {
+        const questionnaire = await this.questionnaireRepository.findOne(
+            {
+                where: {id: idQuestionnaire},
+            }
+        );
+        if (!questionnaire.isFinished) throw new HttpException("Questionnaire not finished", HttpStatus.BAD_REQUEST);
         const result = await this.resultRepository.findOne(
             {
                 where: {questionnaire: {id: idQuestionnaire}, student: {id: idStudent}},
                 relations: ["questionnaire", "questionnaire.questions"]
             });
-        if(!result) throw new HttpException("Result not found", HttpStatus.NOT_FOUND);
+        if (!result) throw new HttpException("Result not found", HttpStatus.NOT_FOUND);
         return toResultDto(result);
 
     }
 
     async createResult(resultCreateDto: ResultCreateDto, sessionId) {
-        if(!resultCreateDto.questionnaireId || !resultCreateDto.responses) throw new HttpException("Missing fields", HttpStatus.BAD_REQUEST);
+        if (!resultCreateDto.questionnaireId || !resultCreateDto.responses) throw new HttpException("Missing fields", HttpStatus.BAD_REQUEST);
         const student = await this.userRepository.findOne({where: {id: sessionId}});
         console.log(student);
         const questionnaire = await this.questionnaireRepository.findOne(
