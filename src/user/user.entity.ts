@@ -3,6 +3,7 @@ import * as bcrypt from "bcrypt";
 import { Role } from "../auth/interface/role.enum";
 import { QuestionnaireEntity } from "../questionnaire/questionnaire.entity";
 import {ResultEntity} from "../result/result.entity";
+import {ModuleEntity} from "../module/module.entity";
 
 @Entity()
 export class UserEntity {
@@ -45,11 +46,11 @@ export class UserEntity {
   })
   role: Role;
 
-  @OneToMany(() => QuestionnaireEntity, questionnaire => questionnaire.author, { cascade: true })
-  questionnaires: QuestionnaireEntity[];
+  @OneToMany(() => ModuleEntity, module => module.author, { cascade: true })
+  myModules: ModuleEntity[];
 
   @OneToMany(() => ResultEntity, result => result.student,{ cascade: true })
-  results: ResultEntity[];
+  myResults: ResultEntity[];
 
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   createdAt: Date;

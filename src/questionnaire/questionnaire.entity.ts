@@ -1,7 +1,7 @@
 import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {QuestionEntity} from "../question/question.entity";
-import {UserEntity} from "../user/user.entity";
 import {ResultEntity} from "../result/result.entity";
+import {ModuleEntity} from "../module/module.entity";
 
 @Entity()
 export class QuestionnaireEntity {
@@ -23,9 +23,9 @@ export class QuestionnaireEntity {
     @OneToMany(() => QuestionEntity, question => question.questionnaire, {cascade: true})
     questions: QuestionEntity[];
 
-    @ManyToOne(() => UserEntity, user => user.questionnaires)
-    author: UserEntity;
+    @ManyToOne(() => ModuleEntity, module => module.questionnaire)
+    module: ModuleEntity;
 
-    @OneToMany(() => ResultEntity, result => result.questionnaire)
+    @OneToMany(() => ResultEntity, result => result.questionnaire,{cascade: true})
     results: ResultEntity[];
 }

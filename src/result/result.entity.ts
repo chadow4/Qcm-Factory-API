@@ -14,8 +14,8 @@ export class ResultEntity {
     responses: string[];
 
     @ManyToOne(() => QuestionnaireEntity, questionnaire => questionnaire.results)
-    questionnaire: QuestionnaireEntity;
+        questionnaire: QuestionnaireEntity;
 
-    @ManyToOne(() => UserEntity, student => student.results)
-    student: UserEntity;
+        @ManyToOne(() => UserEntity, student => student.myResults)
+        student: UserEntity;
 }

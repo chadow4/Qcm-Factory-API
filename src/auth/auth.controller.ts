@@ -21,9 +21,7 @@ export class AuthController {
             message: "User registration successful"
         }
     }catch (error){
-      return {
-        message : error.message,
-      }
+     throw error;
     }
   }
 

@@ -7,6 +7,7 @@ import {QuestionCreateDto} from "../question/question.dto";
 import {UserEntity} from "../user/user.entity";
 import {HttpException, HttpStatus} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
+import {ModuleEntity} from "../module/module.entity";
 
 export class QuestionnaireService {
     constructor(
@@ -15,7 +16,9 @@ export class QuestionnaireService {
         @InjectRepository(QuestionnaireEntity)
         private readonly questionnaireRepository: Repository<QuestionnaireEntity>,
         @InjectRepository(UserEntity)
-        private readonly userRepository: Repository<UserEntity>
+        private readonly userRepository: Repository<UserEntity>,
+        @InjectRepository(ModuleEntity)
+        private readonly moduleRepository: Repository<ModuleEntity>
     ) {
     }
 
@@ -27,7 +30,7 @@ export class QuestionnaireService {
 
     async getQuestionnaireById(id: number): Promise<QuestionnaireDto> {
         const questionnaire = await this.questionnaireRepository.findOne(
-            {where: {id}, relations: ["author", "questions"]});
+            {where: {id}, relations: ["questions"]});
         if (!questionnaire) throw new HttpException("Questionnaire not found", HttpStatus.NOT_FOUND);
 
         if (questionnaire.isFinished) {
@@ -38,16 +41,18 @@ export class QuestionnaireService {
     }
 
     async createQuestionnaire(questionnaireCreateDto: QuestionnaireCreateDto, sessionId) {
-        if (!questionnaireCreateDto.name || !questionnaireCreateDto.time) {
+        if (!questionnaireCreateDto.name || !questionnaireCreateDto.time || !questionnaireCreateDto.moduleId) {
             throw new HttpException("Missing Fields", HttpStatus.BAD_REQUEST);
         }
-        const author = await this.userRepository.findOne({where: {id: sessionId}});
-        if (!author) throw new HttpException("Author not found", HttpStatus.NOT_FOUND);
+        const module = await this.moduleRepository.findOne({where: {id: questionnaireCreateDto.moduleId}, relations: ["author"]});
+        if (!module) throw new HttpException("module not found", HttpStatus.NOT_FOUND);
+
+        if(module.author.id != sessionId) throw new HttpException("You are not the author of this module", HttpStatus.UNAUTHORIZED);
 
         const newQuestionnaire = await this.questionnaireRepository.create({
             name: questionnaireCreateDto.name,
             time: questionnaireCreateDto.time,
-            author: author,
+            module: module,
             isOpen: false,
             isFinished: false
         });
@@ -68,10 +73,10 @@ export class QuestionnaireService {
 
         const questionnaire = await this.questionnaireRepository.findOne({
             where: {id: questionCreateDto.questionnaireId},
-            relations: ["author"]
+            relations: ["module", "module.author"]
         });
         if (!questionnaire) throw new HttpException("Questionnaire not found", HttpStatus.NOT_FOUND);
-        if (questionnaire.author.id != sessionId) {
+        if (questionnaire.module.author.id != sessionId) {
             throw new HttpException("You are not the author of this questionnaire", HttpStatus.UNAUTHORIZED);
         }
 
@@ -91,9 +96,9 @@ export class QuestionnaireService {
     }
 
     async changeState(id: number, sessionId) {
-        const questionnaire = await this.questionnaireRepository.findOne({where: {id}, relations: ["author"]});
+        const questionnaire = await this.questionnaireRepository.findOne({where: {id}, relations: ["module", "module.author"]});
         if (!questionnaire) throw new HttpException("Questionnaire not found", HttpStatus.NOT_FOUND);
-        if (questionnaire.author.id != sessionId) {
+        if (questionnaire.module.author.id != sessionId) {
             throw new HttpException("You are not authorized to finish this questionnaire", HttpStatus.UNAUTHORIZED);
         }
         if(questionnaire.isOpen && !questionnaire.isFinished){

@@ -22,7 +22,7 @@ export class ResultController {
         try {
             return await this.resultService.getAllResultsForQuestionnaire(idQuestionnaire);
         } catch (error) {
-            return {message: error.message};
+            throw error;
         }
     }
 
@@ -34,7 +34,7 @@ export class ResultController {
             try {
                 return await this.resultService.getResultForQuestionnaire(idQuestionnaire, req.user.id);
             } catch (error) {
-                return {message: error.message};
+                throw error;
             }
         }
     }
@@ -47,7 +47,7 @@ export class ResultController {
             await this.resultService.createResult(resultCreateDto, req.user.id);
             return {message: "Result created"};
         } catch (error) {
-            return {message: error.message};
+            throw error;
         }
     }
 

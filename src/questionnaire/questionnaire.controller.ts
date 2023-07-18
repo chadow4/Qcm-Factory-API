@@ -18,7 +18,7 @@ export class QuestionnaireController {
         try {
             return await this.questionnaireService.getAllQuestionnaires();
         } catch (error) {
-            return { message: error.message };
+           throw error;
         }
     }
 
@@ -31,7 +31,7 @@ export class QuestionnaireController {
         try {
             return await this.questionnaireService.getQuestionnaireById(id);
         } catch (error) {
-            return { message: error.message };
+           throw error;
         }
     }
 
@@ -44,7 +44,7 @@ export class QuestionnaireController {
             const state = await this.questionnaireService.changeState(id, req.user.id);
             return { message: "Questionnaire state changed, Opened: " + state };
         } catch (error) {
-            return { message: error.message };
+           throw error;
         }
     }
 
@@ -57,7 +57,7 @@ export class QuestionnaireController {
             await this.questionnaireService.createQuestionnaire(questionnaireCreateDto, req.user.id);
             return { message: "Questionnaire created" };
         } catch (error) {
-            return { message: error.message };
+           throw error;
         }
     }
 
@@ -70,7 +70,7 @@ export class QuestionnaireController {
             await this.questionnaireService.createQuestion(questionCreateDto, req.user.id);
             return { message: "Question created" };
         } catch (error) {
-            return { message: error.message };
+          throw error;
         }
     }
 }

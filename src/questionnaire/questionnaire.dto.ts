@@ -2,6 +2,7 @@ import {IsNotEmpty} from 'class-validator';
 import {ApiProperty} from '@nestjs/swagger';
 import {UserDto, UserPartialDto} from '../user/user.dto';
 import {QuestionDto, QuestionPartialDto} from '../question/question.dto';
+import {ModuleEntity} from "../module/module.entity";
 
 export class QuestionnaireCreateDto {
     @ApiProperty({description: 'Name of the questionnaire'})
@@ -11,6 +12,10 @@ export class QuestionnaireCreateDto {
     @ApiProperty({description: 'Time allocated for the questionnaire'})
     @IsNotEmpty()
     time: number;
+
+    @ApiProperty({description: 'ID of the module the questionnaire belongs to'})
+    @IsNotEmpty()
+    moduleId: number;
 }
 
 export class QuestionnaireDeleteDto {
@@ -40,9 +45,9 @@ export class QuestionnaireDto {
     @IsNotEmpty()
     isFinished: boolean;
 
-    @ApiProperty({type: () => UserPartialDto, description: 'Author of the questionnaire'})
+    @ApiProperty({type: () => ModuleEntity, description: 'Module of the questionnaire'})
     @IsNotEmpty()
-    author: UserDto;
+    module: ModuleEntity;
 
     @ApiProperty({type: () => [QuestionPartialDto], description: 'List of questions in the questionnaire'})
     questions: QuestionDto[];

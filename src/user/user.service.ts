@@ -24,7 +24,7 @@ export class UserService {
   async findOneById(id: number): Promise<UserDto> {
     const user = await this.usersRepository.findOne({
       where: { id },
-      relations: ['questionnaires','results.questionnaire']});
+      relations: ['myModules','myResults.questionnaire']});
     if (!user) {
       throw new HttpException("User not Found", HttpStatus.NOT_FOUND);
     }
@@ -45,11 +45,11 @@ export class UserService {
   async findByLogin({ email, password }: UserLoginDto): Promise<UserDto> {
     const user = await this.usersRepository.findOne({ where: { email } });
     if (!user) {
-      throw new HttpException("User not Found", HttpStatus.NOT_FOUND);
+      throw new HttpException("User not Found", HttpStatus.BAD_REQUEST);
     }
     const areEqual = await bcrypt.compare(password, user.password);
     if (!areEqual) {
-      throw new HttpException("Wrong Password", HttpStatus.UNAUTHORIZED);
+      throw new HttpException("Wrong Password", HttpStatus.BAD_REQUEST);
     }
     return toUserDto(user);
   }

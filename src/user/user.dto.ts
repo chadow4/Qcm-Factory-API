@@ -3,6 +3,7 @@ import {ApiProperty} from '@nestjs/swagger';
 import {Role} from '../auth/interface/role.enum';
 import {QuestionnaireDto, QuestionnairePartialDto} from '../questionnaire/questionnaire.dto';
 import {ResultDto, ResultPartialDto, ResultPartialForUserDto} from "../result/result.dto";
+import {ModuleEntity} from "../module/module.entity";
 
 export class UserCreateDto {
     @ApiProperty({description: 'First name of the user'})
@@ -77,11 +78,11 @@ export class UserDto {
     @IsNotEmpty()
     role: Role;
 
-    @ApiProperty({type: () => [QuestionnairePartialDto], description: 'List of questionnaires created by the user'})
-    questionnaires: QuestionnaireDto[];
+    @ApiProperty({type: () => [ModuleEntity], description: 'List of questionnaires created by the user'})
+    myModules: ModuleEntity[];
 
-    @ApiProperty({type: () => [ResultPartialForUserDto], description: 'List of results of the user'})
-    results: ResultDto[];
+    @ApiProperty({type: () => [ResultDto], description: 'List of results of the user'})
+    myResults: ResultDto[];
 }
 
 
