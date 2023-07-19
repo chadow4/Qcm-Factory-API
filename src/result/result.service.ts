@@ -20,6 +20,7 @@ export class ResultService {
     }
 
     async getAllResultsForQuestionnaire(idQuestionnaire: number): Promise<ResultDto[]> {
+        if(!idQuestionnaire) throw new HttpException("Missing fields", HttpStatus.BAD_REQUEST);
         const questionnaire = await this.questionnaireRepository.findOne(
             {
                 where: {id: idQuestionnaire},
@@ -54,13 +55,13 @@ export class ResultService {
     async createResult(resultCreateDto: ResultCreateDto, sessionId) {
         if (!resultCreateDto.questionnaireId || !resultCreateDto.responses) throw new HttpException("Missing fields", HttpStatus.BAD_REQUEST);
         const student = await this.userRepository.findOne({where: {id: sessionId}});
-        console.log(student);
         const questionnaire = await this.questionnaireRepository.findOne(
             {
                 where: {id: resultCreateDto.questionnaireId},
                 relations: ["questions"]
             });
         if (!student || !questionnaire) throw new HttpException("Student or Questionnaire not found", HttpStatus.NOT_FOUND);
+        if(questionnaire.isFinished) throw new HttpException("Questionnaire already finished", HttpStatus.BAD_REQUEST);
 
         let mark = 0;
         for (let i = 0; i < questionnaire.questions.length; i++) {
