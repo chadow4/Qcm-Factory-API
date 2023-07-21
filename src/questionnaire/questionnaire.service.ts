@@ -30,7 +30,7 @@ export class QuestionnaireService {
 
     async getQuestionnaireById(id: number): Promise<QuestionnaireDto> {
         const questionnaire = await this.questionnaireRepository.findOne(
-            {where: {id}, relations: ["questions"]});
+            {where: {id}, relations: ["questions","module"]});
         if (!questionnaire) throw new HttpException("Questionnaire not found", HttpStatus.NOT_FOUND);
 
         if (questionnaire.isFinished) {
