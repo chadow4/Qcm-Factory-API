@@ -1,7 +1,7 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
 import {QuestionEntity} from "../question/question.entity";
-import {Repository} from "typeorm";
+import {Like, Repository} from "typeorm";
 import {QuestionnaireEntity} from "../questionnaire/questionnaire.entity";
 import {UserEntity} from "../user/user.entity";
 import {ModuleEntity} from "./module.entity";
@@ -29,7 +29,7 @@ export class ModuleService {
 
     async getModuleById(id: number): Promise<ModuleDto> {
         const module = await this.moduleRepository.findOne(
-            {where: {id}, relations: ["author", "questionnaire"]});
+            {where: {id}, relations: ["author", "questionnaire", "sections"]});
         if (!module) throw new HttpException("Module not found", HttpStatus.NOT_FOUND);
         return toModuleDto(module);
     }
@@ -50,6 +50,14 @@ export class ModuleService {
             throw new HttpException("Module already exists", HttpStatus.BAD_REQUEST);
         }
     }
+
+    async findAllByKeyword(keyword: string) {
+        const modules = await this.moduleRepository.find({
+            where: [{name: Like(`%${keyword}%`)}],
+        });
+        return modules.map(module => toModuleDto(module));
+    }
+
 
 }
 

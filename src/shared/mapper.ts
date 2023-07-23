@@ -8,11 +8,13 @@ import {ResultEntity} from "../result/result.entity";
 import {ResultDto} from "../result/result.dto";
 import {ModuleDto} from "../module/module.dto";
 import {ModuleEntity} from "../module/module.entity";
+import {SectionDto} from "../section/section.dto";
+import {SectionEntity} from "../section/section.entity";
 
 
 export const toUserDto = (data: UserEntity): UserDto => {
     const {id, firstname, lastname, email, role, myModules,myResults} = data;
-    return <UserDto>{
+    return <UserDto><unknown>{
         id,
         firstname,
         lastname,
@@ -24,12 +26,13 @@ export const toUserDto = (data: UserEntity): UserDto => {
 };
 
 export const toModuleDto = (data: ModuleEntity): ModuleDto => {
-    const {id, name, author, questionnaire} = data;
-    return <ModuleDto>{
+    const {id, name, author, questionnaire, sections} = data;
+    return <ModuleDto><unknown>{
         id,
         name,
         author: author && toUserDto(author),
-        questionnaire: questionnaire && questionnaire.map(questionnaire => toQuestionnaireDto(questionnaire))
+        questionnaire: questionnaire && questionnaire.map(questionnaire => toQuestionnaireDto(questionnaire)),
+        sections: sections && sections.map(section => toSectionDto(section))
     };
 
 }
@@ -46,7 +49,7 @@ export const toResultDto = (data: ResultEntity): ResultDto => {
 }
 export const toQuestionnaireDto = (data: QuestionnaireEntity): QuestionnaireDto => {
     const {id, name, time,isOpen, module, questions, isFinished} = data;
-    return <QuestionnaireDto>{
+    return <QuestionnaireDto><unknown>{
         id,
         name,
         time,
@@ -59,7 +62,7 @@ export const toQuestionnaireDto = (data: QuestionnaireEntity): QuestionnaireDto 
 
 export const toQuestionnaireWithoutResponses = (data: QuestionnaireEntity): QuestionnaireDto => {
     const {id, name, time,isOpen, module, questions,isFinished} = data;
-    return <QuestionnaireDto>{
+    return <QuestionnaireDto><unknown>{
         id,
         name,
         time,
@@ -92,5 +95,14 @@ export const toQuestionWithoutResponsesDto = (data: QuestionEntity): QuestionWit
         options
     };
 };
+
+export const toSectionDto = (data: SectionEntity): SectionDto => {
+    const {id, name, module} = data;
+    return <SectionDto><unknown>{
+        id,
+        name,
+        module: module && toModuleDto(module),
+    };
+}
 
 
