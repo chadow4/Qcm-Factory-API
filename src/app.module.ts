@@ -14,6 +14,8 @@ import { ResultModule } from './result/result.module';
 import {ResultEntity} from "./result/result.entity";
 import { ModuleModule } from './module/module.module';
 import {ModuleEntity} from "./module/module.entity";
+import {SectionModule} from "./section/section.module";
+import {SectionEntity} from "./section/section.entity";
 
 @Module({
   imports: [ConfigModule.forRoot(), TypeOrmModule.forRoot({
@@ -23,9 +25,9 @@ import {ModuleEntity} from "./module/module.entity";
     username: "root",
     password: "root",
     database: "qcmfactory",
-    entities: [UserEntity,QuestionnaireEntity,QuestionEntity,ResultEntity,ModuleEntity], // adding entities
+    entities: [UserEntity,QuestionnaireEntity,QuestionEntity,ResultEntity,ModuleEntity,SectionEntity], // adding entities
     synchronize: true
-  }),UserModule,AuthModule, QuestionnaireModule, QuestionModule, ResultModule, ModuleModule
+  }),UserModule,AuthModule, QuestionnaireModule, QuestionModule, ResultModule, ModuleModule,SectionModule
   ],
   controllers: [AppController],
   providers: [AppService],

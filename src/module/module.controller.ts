@@ -1,6 +1,6 @@
-import {Body, Controller, Get, Param, Post, Request, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, Param, Post, Query, Request, UseGuards} from '@nestjs/common';
 import {ModuleService} from "./module.service";
-import {ModuleCreateDto} from "./module.dto";
+import {ModuleCreateDto, ModuleDto} from "./module.dto";
 import {AuthGuard} from "@nestjs/passport";
 import {HasRoles} from "../auth/has-roles.decorator";
 import {Role} from "../auth/interface/role.enum";
@@ -21,15 +21,27 @@ export class ModuleController {
         }
     }
 
+    @Get('/search')
+    @UseGuards(AuthGuard("jwt"))
+    async findAllByKeyword(@Query('keyword') keyword: string): Promise<ModuleDto[]> {
+        try {
+            return await this.moduleService.findAllByKeyword(keyword);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
     @Get(":id")
     @UseGuards(AuthGuard("jwt"))
     async getModuleById(@Param("id") id: number) {
         try {
             return await this.moduleService.getModuleById(id);
         } catch (error) {
-           throw error;
+            throw error;
         }
     }
+
 
     @Post()
     @HasRoles(Role.Prof)
