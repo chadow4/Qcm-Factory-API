@@ -10,10 +10,12 @@ import {ModuleDto} from "../module/module.dto";
 import {ModuleEntity} from "../module/module.entity";
 import {SectionDto} from "../section/section.dto";
 import {SectionEntity} from "../section/section.entity";
+import {FileEntity} from "../file/file.entity";
+import {FileDto} from "../file/file.dto";
 
 
 export const toUserDto = (data: UserEntity): UserDto => {
-    const {id, firstname, lastname, email, role, myModules,myResults} = data;
+    const {id, firstname, lastname, email, role, myModules, myResults} = data;
     return <UserDto><unknown>{
         id,
         firstname,
@@ -38,7 +40,7 @@ export const toModuleDto = (data: ModuleEntity): ModuleDto => {
 }
 
 export const toResultDto = (data: ResultEntity): ResultDto => {
-    const {id, responses, questionnaire, student,mark} = data;
+    const {id, responses, questionnaire, student, mark} = data;
     return <ResultDto>{
         id,
         responses,
@@ -48,7 +50,7 @@ export const toResultDto = (data: ResultEntity): ResultDto => {
     };
 }
 export const toQuestionnaireDto = (data: QuestionnaireEntity): QuestionnaireDto => {
-    const {id, name, time,isOpen, module, questions, isFinished} = data;
+    const {id, name, time, isOpen, module, questions, isFinished} = data;
     return <QuestionnaireDto><unknown>{
         id,
         name,
@@ -61,7 +63,7 @@ export const toQuestionnaireDto = (data: QuestionnaireEntity): QuestionnaireDto 
 };
 
 export const toQuestionnaireWithoutResponses = (data: QuestionnaireEntity): QuestionnaireDto => {
-    const {id, name, time,isOpen, module, questions,isFinished} = data;
+    const {id, name, time, isOpen, module, questions, isFinished} = data;
     return <QuestionnaireDto><unknown>{
         id,
         name,
@@ -97,11 +99,26 @@ export const toQuestionWithoutResponsesDto = (data: QuestionEntity): QuestionWit
 };
 
 export const toSectionDto = (data: SectionEntity): SectionDto => {
-    const {id, name, module} = data;
+    const {id, name, module, files} = data;
     return <SectionDto><unknown>{
         id,
         name,
         module: module && toModuleDto(module),
+        files: files && files.map(file => toFileDto(file))
+
+
+    };
+}
+
+export const toFileDto = (data: FileEntity): FileDto => {
+    const {id, name,type, path, size, section} = data;
+    return <FileDto><unknown>{
+        id,
+        name,
+        path,
+        type,
+        size,
+        section: section && toSectionDto(section),
     };
 }
 

@@ -29,7 +29,7 @@ export class ModuleService {
 
     async getModuleById(id: number): Promise<ModuleDto> {
         const module = await this.moduleRepository.findOne(
-            {where: {id}, relations: ["author", "questionnaire", "sections"]});
+            {where: {id}, relations: ["author", "questionnaire", "sections","sections.files"]});
         if (!module) throw new HttpException("Module not found", HttpStatus.NOT_FOUND);
         return toModuleDto(module);
     }

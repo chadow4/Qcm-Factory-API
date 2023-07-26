@@ -1,4 +1,5 @@
 import { ModuleEntity } from "../module/module.entity";
+import {FileEntity} from "../file/file.entity";
 
 
 export class SectionCreateDto {
@@ -9,4 +10,5 @@ export class SectionDto {
     id: number;
     name: string;
     module?: ModuleEntity;
+    file?: FileEntity[];
 }

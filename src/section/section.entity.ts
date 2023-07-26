@@ -1,5 +1,6 @@
 import { ModuleEntity } from "../module/module.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {FileEntity} from "../file/file.entity";
 
 @Entity()
 export class SectionEntity {
@@ -11,4 +12,7 @@ export class SectionEntity {
 
     @ManyToOne(() => ModuleEntity, module => module.sections)
     module: ModuleEntity;
+
+    @OneToMany(() => FileEntity, file => file.section, {cascade: true})
+    files: FileEntity[];
 }

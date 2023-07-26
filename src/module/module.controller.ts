@@ -54,4 +54,5 @@ export class ModuleController {
             throw error;
         }
     }
+
 }
