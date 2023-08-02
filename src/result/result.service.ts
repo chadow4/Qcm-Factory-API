@@ -26,6 +26,7 @@ export class ResultService {
                 where: {id: idQuestionnaire},
             }
         );
+        if(!questionnaire) throw new HttpException("Questionnaire not found", HttpStatus.NOT_FOUND);
         if (!questionnaire.isFinished) throw new HttpException("Questionnaire not finished", HttpStatus.BAD_REQUEST);
         const results = await this.resultRepository.find(
             {
@@ -41,6 +42,7 @@ export class ResultService {
                 where: {id: idQuestionnaire},
             }
         );
+        if(!questionnaire) throw new HttpException("Questionnaire not found", HttpStatus.NOT_FOUND);
         if (!questionnaire.isFinished) throw new HttpException("Questionnaire not finished", HttpStatus.BAD_REQUEST);
         const result = await this.resultRepository.findOne(
             {
