@@ -12,6 +12,8 @@ import {SectionDto} from "../section/section.dto";
 import {SectionEntity} from "../section/section.entity";
 import {FileEntity} from "../file/file.entity";
 import {FileDto} from "../file/file.dto";
+import {ResourceDto} from "../resource/resource.dto";
+import {ResourceEntity} from "../resource/ressource.entity";
 
 
 export const toUserDto = (data: UserEntity): UserDto => {
@@ -99,12 +101,13 @@ export const toQuestionWithoutResponsesDto = (data: QuestionEntity): QuestionWit
 };
 
 export const toSectionDto = (data: SectionEntity): SectionDto => {
-    const {id, name, module, files} = data;
+    const {id, name, module, files,resources} = data;
     return <SectionDto><unknown>{
         id,
         name,
         module: module && toModuleDto(module),
-        files: files && files.map(file => toFileDto(file))
+        files: files && files.map(file => toFileDto(file)),
+        resources: resources && resources.map(resource => toResourceDto(resource))
 
 
     };
@@ -123,3 +126,12 @@ export const toFileDto = (data: FileEntity): FileDto => {
 }
 
 
+export const toResourceDto = (data: ResourceEntity): ResourceDto => {
+    const {id, name, content, section} = data;
+    return <ResourceDto><unknown>{
+        id,
+        name,
+        content,
+        section: section && toSectionDto(section),
+    };
+}

@@ -18,6 +18,8 @@ import {SectionModule} from "./section/section.module";
 import {SectionEntity} from "./section/section.entity";
 import { FileModule } from './file/file.module';
 import {FileEntity} from "./file/file.entity";
+import {ResourceModule} from "./resource/ressource.module";
+import {ResourceEntity} from "./resource/ressource.entity";
 
 @Module({
   imports: [ConfigModule.forRoot(), TypeOrmModule.forRoot({
@@ -27,9 +29,9 @@ import {FileEntity} from "./file/file.entity";
     username: "root",
     password: "root",
     database: "qcmfactory",
-    entities: [UserEntity,QuestionnaireEntity,QuestionEntity,ResultEntity,ModuleEntity,SectionEntity,FileEntity], // adding entities
+    entities: [UserEntity,QuestionnaireEntity,QuestionEntity,ResultEntity,ModuleEntity,SectionEntity,FileEntity,ResourceEntity], // adding entities
     synchronize: true
-  }),UserModule,AuthModule, QuestionnaireModule, QuestionModule, ResultModule, ModuleModule,SectionModule, FileModule
+  }),UserModule,AuthModule, QuestionnaireModule, QuestionModule, ResultModule, ModuleModule,SectionModule, FileModule, ResourceModule
   ],
   controllers: [AppController],
   providers: [AppService],

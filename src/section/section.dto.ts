@@ -11,4 +11,5 @@ export class SectionDto {
     name: string;
     module?: ModuleEntity;
     file?: FileEntity[];
+    section?: SectionDto[];
 }

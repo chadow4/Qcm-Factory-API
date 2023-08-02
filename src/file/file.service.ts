@@ -29,7 +29,7 @@ export class FileService {
         });
 
         if (!section) throw new HttpException("section not found", HttpStatus.NOT_FOUND);
-        if (section.module.author.id != sessionId) throw new HttpException("You are not the author of this module", HttpStatus.UNAUTHORIZED);
+        if (section.module.author.id != sessionId) throw new HttpException("You are not the author of this module", HttpStatus.BAD_REQUEST);
 
         const newFile = await this.fileRepository.create({
             name: file.name,
@@ -42,7 +42,7 @@ export class FileService {
         try {
             await this.fileRepository.save(newFile);
         } catch (error) {
-            throw new HttpException("File already exists", HttpStatus.BAD_REQUEST);
+            throw new HttpException("Error creating file", HttpStatus.BAD_REQUEST);
         }
 
     }
