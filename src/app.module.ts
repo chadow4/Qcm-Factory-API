@@ -28,7 +28,7 @@ import {ResourceEntity} from "./resource/ressource.entity";
     port: 3306,
     username: "root",
     password: "root",
-    database: "qcmfactory",
+    database: "qcmfactoryprod",
     entities: [UserEntity,QuestionnaireEntity,QuestionEntity,ResultEntity,ModuleEntity,SectionEntity,FileEntity,ResourceEntity], // adding entities
     synchronize: true
   }),UserModule,AuthModule, QuestionnaireModule, QuestionModule, ResultModule, ModuleModule,SectionModule, FileModule, ResourceModule
